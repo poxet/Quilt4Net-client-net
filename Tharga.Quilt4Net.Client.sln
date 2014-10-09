@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tharga.Quilt4Net", "Tharga.Quilt4Net\Tharga.Quilt4Net.csproj", "{3F4E3A24-454B-4308-8451-1CF9485675F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tharga.Quilt4NetV4", "Tharga.Quilt4NetV4\Tharga.Quilt4NetV4.csproj", "{D135A519-0CF4-4456-90AF-1CD9DFE3C071}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{D31ACFAC-0347-40BB-85B1-BC3872072CE4}"
+	ProjectSection(SolutionItems) = preProject
+		Build\AssemblyVersionInfo.cs = Build\AssemblyVersionInfo.cs
+		Build\build.tasks = Build\build.tasks
+		Build\CI.msbuild = Build\CI.msbuild
+		Build\Release.msbuild = Build\Release.msbuild
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9CEF169F-877A-4252-B2EF-3C9473D9FBCC}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tharga.Quilt4Net.Tests", "Tharga.Quilt4Net.Tests\Tharga.Quilt4Net.Tests.csproj", "{31389358-1E62-4D88-94A7-F3315DD1EA37}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		CI|Any CPU = CI|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		HM|Any CPU = HM|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F4E3A24-454B-4308-8451-1CF9485675F5}.CI|Any CPU.ActiveCfg = CI|Any CPU
+		{3F4E3A24-454B-4308-8451-1CF9485675F5}.CI|Any CPU.Build.0 = CI|Any CPU
+		{3F4E3A24-454B-4308-8451-1CF9485675F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F4E3A24-454B-4308-8451-1CF9485675F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F4E3A24-454B-4308-8451-1CF9485675F5}.HM|Any CPU.ActiveCfg = HM|Any CPU
+		{3F4E3A24-454B-4308-8451-1CF9485675F5}.HM|Any CPU.Build.0 = HM|Any CPU
+		{3F4E3A24-454B-4308-8451-1CF9485675F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F4E3A24-454B-4308-8451-1CF9485675F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D135A519-0CF4-4456-90AF-1CD9DFE3C071}.CI|Any CPU.ActiveCfg = CI|Any CPU
+		{D135A519-0CF4-4456-90AF-1CD9DFE3C071}.CI|Any CPU.Build.0 = CI|Any CPU
+		{D135A519-0CF4-4456-90AF-1CD9DFE3C071}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D135A519-0CF4-4456-90AF-1CD9DFE3C071}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D135A519-0CF4-4456-90AF-1CD9DFE3C071}.HM|Any CPU.ActiveCfg = HM|Any CPU
+		{D135A519-0CF4-4456-90AF-1CD9DFE3C071}.HM|Any CPU.Build.0 = HM|Any CPU
+		{D135A519-0CF4-4456-90AF-1CD9DFE3C071}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D135A519-0CF4-4456-90AF-1CD9DFE3C071}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31389358-1E62-4D88-94A7-F3315DD1EA37}.CI|Any CPU.ActiveCfg = CI|Any CPU
+		{31389358-1E62-4D88-94A7-F3315DD1EA37}.CI|Any CPU.Build.0 = CI|Any CPU
+		{31389358-1E62-4D88-94A7-F3315DD1EA37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31389358-1E62-4D88-94A7-F3315DD1EA37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31389358-1E62-4D88-94A7-F3315DD1EA37}.HM|Any CPU.ActiveCfg = HM|Any CPU
+		{31389358-1E62-4D88-94A7-F3315DD1EA37}.HM|Any CPU.Build.0 = HM|Any CPU
+		{31389358-1E62-4D88-94A7-F3315DD1EA37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31389358-1E62-4D88-94A7-F3315DD1EA37}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
