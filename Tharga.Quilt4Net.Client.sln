@@ -24,6 +24,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9CEF16
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tharga.Quilt4Net.Tests", "Tharga.Quilt4Net.Tests\Tharga.Quilt4Net.Tests.csproj", "{31389358-1E62-4D88-94A7-F3315DD1EA37}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{7148A8C0-B6C6-4036-889A-EAFF96FA8374}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleSample", "Sample\Tharga.ConsoleSample\ConsoleSample.csproj", "{6D202ECE-28E5-4620-AA98-A3A93A871D27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CI|Any CPU = CI|Any CPU
@@ -56,8 +60,19 @@ Global
 		{31389358-1E62-4D88-94A7-F3315DD1EA37}.HM|Any CPU.Build.0 = HM|Any CPU
 		{31389358-1E62-4D88-94A7-F3315DD1EA37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31389358-1E62-4D88-94A7-F3315DD1EA37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D202ECE-28E5-4620-AA98-A3A93A871D27}.CI|Any CPU.ActiveCfg = Release|Any CPU
+		{6D202ECE-28E5-4620-AA98-A3A93A871D27}.CI|Any CPU.Build.0 = Release|Any CPU
+		{6D202ECE-28E5-4620-AA98-A3A93A871D27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D202ECE-28E5-4620-AA98-A3A93A871D27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D202ECE-28E5-4620-AA98-A3A93A871D27}.HM|Any CPU.ActiveCfg = Release|Any CPU
+		{6D202ECE-28E5-4620-AA98-A3A93A871D27}.HM|Any CPU.Build.0 = Release|Any CPU
+		{6D202ECE-28E5-4620-AA98-A3A93A871D27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D202ECE-28E5-4620-AA98-A3A93A871D27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6D202ECE-28E5-4620-AA98-A3A93A871D27} = {7148A8C0-B6C6-4036-889A-EAFF96FA8374}
 	EndGlobalSection
 EndGlobal
