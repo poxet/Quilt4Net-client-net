@@ -17,9 +17,11 @@ namespace Tharga.Quilt4Net
         private static readonly object SyncRoot = new object();
         private static ISessionData _sessionData;
         internal static bool _registeredOnServer;
-        private static DateTime	 _clientStartTime = DateTime.UtcNow;
+        private static DateTime	_clientStartTime = DateTime.UtcNow;
 
         public static MachineData Machine { get { return GetSessionData().Machine as MachineData; } }
+        public static DateTime ClientStartTime { get { return _clientStartTime; } }
+        public static bool RegisteredOnServer { get { return _registeredOnServer; } }
 
         public class RegisterCompleteEventArgs : EventArgs
         {
