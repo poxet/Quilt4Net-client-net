@@ -10,10 +10,12 @@ namespace Tharga.Quilt4Net
 
         private ConfigSection()
         {
-            
         }
 
-        public static ConfigSection Instance { get { return _instance.Value; } }
+        public static ConfigSection Instance
+        {
+            get { return _instance.Value; }
+        }
 
         [ConfigurationProperty("ClientToken", IsRequired = false)]
         public string ClientTokenValue
@@ -23,62 +25,36 @@ namespace Tharga.Quilt4Net
                 var value = base[new ConfigurationProperty("ClientToken", typeof(string), null)];
                 return (string)value;
             }
-            set
-            {
-                this["ClientToken"] = value;
-            }
+
+            set { this["ClientToken"] = value; }
         }
 
         [ConfigurationProperty("Enabled", IsRequired = false, DefaultValue = true)]
         public bool EnabledValue
         {
-            get
-            {
-                return (bool)this["Enabled"];
-            }
-            set
-            {
-                this["Enabled"] = value;
-            }
+            get { return (bool)this["Enabled"]; }
+            set { this["Enabled"] = value; }
         }
 
         [ConfigurationProperty("UseBuildTime", IsRequired = false, DefaultValue = false)]
         public bool UseBuildTimeValue
         {
-            get
-            {
-                return (bool)this["UseBuildTime"];
-            }
-            set
-            {
-                this["UseBuildTime"] = value;
-            }
+            get { return (bool)this["UseBuildTime"]; }
+            set { this["UseBuildTime"] = value; }
         }
 
         [ConfigurationProperty("Session")]
         public SessionElement SessionValue
         {
-            get
-            {
-                return (SessionElement)this["Session"];
-            }
-            set
-            {
-                this["Session"] = value;
-            }
+            get { return (SessionElement)this["Session"]; }
+            set { this["Session"] = value; }
         }
 
         [ConfigurationProperty("Target")]
         internal TargetElement TargetValue
         {
-            get
-            {
-                return (TargetElement)this["Target"];
-            }
-            set
-            {
-                this["Target"] = value;
-            }
+            get { return (TargetElement)this["Target"]; }
+            set { this["Target"] = value; }
         }
     }
 }

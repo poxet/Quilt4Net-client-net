@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Tharga.Quilt4Net
 {
-    static class HelperExtension
+    internal static class HelperExtension
     {
         public static string ToMd5Hash(this string input)
         {

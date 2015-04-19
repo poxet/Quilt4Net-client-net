@@ -2,7 +2,7 @@
 
 namespace Tharga.Quilt4Net
 {
-    class FirstAssemblyException : Exception
+    internal class FirstAssemblyException : Exception
     {
         public FirstAssemblyException(string message)
             : base(message)

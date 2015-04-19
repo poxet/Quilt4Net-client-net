@@ -21,8 +21,7 @@ namespace Tharga.Quilt4Net
         internal static string GetClientToken()
         {
             var clientToken = Configuration.ClientToken;
-            if (string.IsNullOrEmpty(clientToken))
-                throw ExpectedIssues.GetException(ExpectedIssues.ClientTokenNotSet);
+            if (string.IsNullOrEmpty(clientToken)) throw ExpectedIssues.GetException(ExpectedIssues.ClientTokenNotSet);
             return clientToken;
         }
 
@@ -36,18 +35,14 @@ namespace Tharga.Quilt4Net
             var assemblyVersion = GetFirstAssembly().GetName().Version;
             var clickOnceVersion = (Version)null;
 
-            if (IsClickOnce)
-                clickOnceVersion = ApplicationDeployment.CurrentDeployment.CurrentVersion;
+            if (IsClickOnce) clickOnceVersion = ApplicationDeployment.CurrentDeployment.CurrentVersion;
 
             return clickOnceVersion ?? assemblyVersion;
         }
 
         internal static bool IsClickOnce
         {
-            get
-            {
-                return ApplicationDeployment.IsNetworkDeployed;
-            }
+            get { return ApplicationDeployment.IsNetworkDeployed; }
         }
 
         internal static string GetSupportToolkitNameVersion()
@@ -65,8 +60,7 @@ namespace Tharga.Quilt4Net
                     if (_firstAssembly == null)
                     {
                         _firstAssembly = Assembly.GetEntryAssembly();
-                        if (_firstAssembly == null)
-                            throw ExpectedIssues.GetException(ExpectedIssues.CannotAutomaticallyRetrieveAssembly);
+                        if (_firstAssembly == null) throw ExpectedIssues.GetException(ExpectedIssues.CannotAutomaticallyRetrieveAssembly);
                     }
                 }
             }
@@ -87,8 +81,7 @@ namespace Tharga.Quilt4Net
                 }
             }
 
-            if (_firstAssembly != firstAssembly) 
-                throw ExpectedIssues.GetException(ExpectedIssues.CannotChangeFirstAssembly).AddData("From", _firstAssembly.GetName().FullName).AddData("To", firstAssembly.GetName().FullName);
+            if (_firstAssembly != firstAssembly) throw ExpectedIssues.GetException(ExpectedIssues.CannotChangeFirstAssembly).AddData("From", _firstAssembly.GetName().FullName).AddData("To", firstAssembly.GetName().FullName);
         }
 
         public static string GetMachineFingerprint()
@@ -135,6 +128,7 @@ namespace Tharga.Quilt4Net
                     response = "N/A";
                 }
             }
+
             return response;
         }
 
@@ -166,6 +160,7 @@ namespace Tharga.Quilt4Net
             {
                 response = "N/A";
             }
+
             return response;
         }
 
@@ -190,6 +185,7 @@ namespace Tharga.Quilt4Net
             {
                 cpuInfo = "N/A";
             }
+
             return cpuInfo;
         }
 
@@ -221,8 +217,7 @@ namespace Tharga.Quilt4Net
                 if (!drive.StartsWith("A") && !drive.StartsWith("B"))
                 {
                     driveSerial = GetHarddriveId(drive[0]);
-                    if (!string.IsNullOrEmpty(driveSerial))
-                        break;
+                    if (!string.IsNullOrEmpty(driveSerial)) break;
                 }
             }
 
@@ -245,21 +240,19 @@ namespace Tharga.Quilt4Net
         {
             //TODO: Does not work when using the '\' so now I tried with '-'. Perhaps '\\' will work.
             return string.Format(@"{0}-{1}", Environment.UserDomainName, Environment.UserName);
-        }        
+        }
 
         private static string GetUserSid()
         {
             var currentUser = System.Security.Principal.WindowsIdentity.GetCurrent();
-            if (currentUser == null || currentUser.User == null || currentUser.User.AccountDomainSid == null)
-                return "NULL";
+            if (currentUser == null || currentUser.User == null || currentUser.User.AccountDomainSid == null) return "NULL";
 
             return currentUser.User.AccountDomainSid.ToString();
         }
 
         public static DateTime? GetBuildTime()
         {
-            if (!Configuration.UseBuildTime)
-                return null;
+            if (!Configuration.UseBuildTime) return null;
 
             const int PeHeaderOffset = 60;
             const int LinkerTimestampOffset = 8;
@@ -291,7 +284,6 @@ namespace Tharga.Quilt4Net
             try
             {
                 var timeZone = TimeZoneInfo.Local;
-                //var timeZone = TimeZone.CurrentTimeZone;
                 return timeZone.Id;
             }
             catch

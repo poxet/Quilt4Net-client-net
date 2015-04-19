@@ -59,8 +59,6 @@ namespace Tharga.Quilt4Net
         {
             Warning,
             Error,
-            //Fatal,
-            //Information
         }
 
         public static IssueResponse Register(Exception exception, ExceptionIssueLevel issueLevel = ExceptionIssueLevel.Error, bool? visibleToUser = null, string userHandle = null, string userInput = null)
@@ -155,7 +153,7 @@ namespace Tharga.Quilt4Net
                 var target = TargetFactory.Get();
                 var reponse = target.RegisterIssue(issueData);
 
-                Session._registeredOnServer = true; //TODO: This is true, also if an issue has been returned from the server
+                Session.RegisteredOnServer = true; //TODO: This is true, also if an issue has been returned from the server
 
                 //TODO: Make it possible to append a user comment on an issue (Ither on the initial call, or afterwords as a second call)
                 registerCompleteEventArgs = new RegisterCompleteEventArgs(true, reponse, new OriginalData(issueData));

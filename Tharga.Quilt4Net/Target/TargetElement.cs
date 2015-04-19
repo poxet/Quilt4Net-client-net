@@ -3,11 +3,10 @@ using System.Configuration;
 
 namespace Tharga.Quilt4Net.Target
 {
-    class TargetElement : ConfigurationElement
+    internal class TargetElement : ConfigurationElement
     {
         private TargetElement()
         {
-            
         }
 
         [ConfigurationProperty("Type", IsRequired = false)]
@@ -17,14 +16,11 @@ namespace Tharga.Quilt4Net.Target
             {
                 var configurationProperty = new ConfigurationProperty("Type", typeof(Configuration.Target.TargetType), null);
                 var prop = base[configurationProperty];
-                if (prop == null)
-                    return Configuration.Target.TargetType.Service;
+                if (prop == null) return Configuration.Target.TargetType.Service;
                 return (Configuration.Target.TargetType)prop;
             }
-            set
-            {
-                this["Type"] = value;
-            }
+
+            set { this["Type"] = value; }
         }
 
         [ConfigurationProperty("Location", IsRequired = false)]
@@ -35,12 +31,9 @@ namespace Tharga.Quilt4Net.Target
                 var configurationProperty = new ConfigurationProperty("Location", typeof(string), null);
                 return (string)base[configurationProperty] ?? "https://www.Quilt4Net.com/";
             }
-            set
-            {
-                this["Location"] = value;
-            }
-        }
 
+            set { this["Location"] = value; }
+        }
 
         [ConfigurationProperty("Timeout", IsRequired = false)]
         public TimeSpan Timeout
@@ -50,10 +43,8 @@ namespace Tharga.Quilt4Net.Target
                 var configurationProperty = new ConfigurationProperty("Timeout", typeof(TimeSpan?), null);
                 return (TimeSpan?)base[configurationProperty] ?? new TimeSpan(0, 0, 100);
             }
-            set
-            {
-                this["Timeout"] = value;
-            }
+
+            set { this["Timeout"] = value; }
         }
     }
 }

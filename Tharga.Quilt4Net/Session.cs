@@ -14,14 +14,26 @@ namespace Tharga.Quilt4Net
 {
     public static class Session
     {
-        private static readonly object SyncRoot = new object();
+        private static readonly DateTime _clientStartTime = DateTime.UtcNow;
+        private static readonly object _syncRoot = new object();
         private static ISessionData _sessionData;
-        internal static bool _registeredOnServer;
-        private static DateTime	_clientStartTime = DateTime.UtcNow;
+        private static bool _registeredOnServer;
 
-        public static MachineData Machine { get { return GetSessionData().Machine as MachineData; } }
-        public static DateTime ClientStartTime { get { return _clientStartTime; } }
-        public static bool RegisteredOnServer { get { return _registeredOnServer; } }
+        public static MachineData Machine
+        {
+            get { return GetSessionData().Machine as MachineData; }
+        }
+
+        public static DateTime ClientStartTime
+        {
+            get { return _clientStartTime; }
+        }
+
+        public static bool RegisteredOnServer
+        {
+            get { return _registeredOnServer; }
+            internal set { _registeredOnServer = value; }
+        }
 
         public class RegisterCompleteEventArgs : EventArgs
         {
@@ -39,9 +51,20 @@ namespace Tharga.Quilt4Net
                 _exception = exception;
             }
 
-            public bool IsServerOnline { get { return _isServerOnline; } }
-            public bool Success { get { return _exception == null; } }
-            public Exception Exception { get { return _exception; } }
+            public bool IsServerOnline
+            {
+                get { return _isServerOnline; }
+            }
+
+            public bool Success
+            {
+                get { return _exception == null; }
+            }
+
+            public Exception Exception
+            {
+                get { return _exception; }
+            }
         }
 
         public static event EventHandler<RegisterCompleteEventArgs> RegisterCompleteEvent;
@@ -71,13 +94,11 @@ namespace Tharga.Quilt4Net
 
         public static SessionResponse Register()
         {
-            if (!Configuration.Enabled)
-                return null;
+            if (!Configuration.Enabled) return null;
 
             var response = RegisterEx(GetSessionData);
 
-            if (!response.Success)
-                throw new InvalidOperationException("Unable to register session. Look at inner exception for details.", response.Exception);
+            if (!response.Success) throw new InvalidOperationException("Unable to register session. Look at inner exception for details.", response.Exception);
 
             var result = new SessionResponse(response.IsServerOnline, response.Exception);
             return result;
@@ -99,13 +120,11 @@ namespace Tharga.Quilt4Net
 
         private static void AssureSessionData()
         {
-            if (_sessionData != null)
-                return;
+            if (_sessionData != null) return;
 
-            lock (SyncRoot)
+            lock (_syncRoot)
             {
-                if (_sessionData != null)
-                    return;
+                if (_sessionData != null) return;
 
                 _sessionData = CreateSessionData();
             }
@@ -115,16 +134,16 @@ namespace Tharga.Quilt4Net
         {
             var applicationData = new ApplicationData(Helper.GetApplicationFingerprint(), Configuration.ApplicationName, Configuration.ApplicationVersion, Helper.GetSupportToolkitNameVersion(), Helper.GetBuildTime());
             var data = new Dictionary<string, string>
-                       {
-                           { "OsName", Helper.GetOsName() },
-                           { "Model", Helper.GetModel() },
-                           { "Type", "Desktop" },
-                           { "Screen", Helper.GetScreen() },
-                           { "TimeZone", Helper.GetTimeZone() },
-                           { "Language", Helper.GetLanguage() }
-                       };
+            {
+                { "OsName", Helper.GetOsName() },
+                { "Model", Helper.GetModel() },
+                { "Type", "Desktop" },
+                { "Screen", Helper.GetScreen() },
+                { "TimeZone", Helper.GetTimeZone() },
+                { "Language", Helper.GetLanguage() }
+            };
 
-            var machineData = new MachineData(Helper.GetMachineFingerprint(), Helper.GetMachineName(), data );
+            var machineData = new MachineData(Helper.GetMachineFingerprint(), Helper.GetMachineName(), data);
             var userData = new UserData(Helper.GetUserFingerprint(), Helper.GetUserName());
             var sessionData = new SessionData(Configuration.ClientToken, Guid.NewGuid(), _clientStartTime, Configuration.Session.Environment, applicationData, machineData, userData);
             return sessionData;
@@ -132,17 +151,14 @@ namespace Tharga.Quilt4Net
 
         public static void End()
         {
-            if (!Configuration.Enabled) 
-                return;
+            if (!Configuration.Enabled) return;
 
-            if (_sessionData == null || !_registeredOnServer)
-                return;
+            if (_sessionData == null || !_registeredOnServer) return;
 
             Guid sessionGuid;
-            lock (SyncRoot)
+            lock (_syncRoot)
             {
-                if (_sessionData == null) 
-                    return;
+                if (_sessionData == null) return;
 
                 sessionGuid = _sessionData.SessionGuid;
                 _sessionData = null;

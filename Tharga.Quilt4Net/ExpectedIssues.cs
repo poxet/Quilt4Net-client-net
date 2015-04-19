@@ -94,11 +94,13 @@ namespace Tharga.Quilt4Net
                     }
                 }
             }
+
             var exp = new WebException(string.Format("{0}{2}{1}", exception.Message, message, Environment.NewLine), exception, exception.Status, exception.Response);
             foreach (var item in dic)
             {
                 exp.Data.Add(item.Key, item.Value);
             }
+
             return exp;
         }
 

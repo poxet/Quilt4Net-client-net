@@ -2,7 +2,7 @@
 
 namespace Tharga.Quilt4Net
 {
-    class SessionElement : ConfigurationElement
+    internal class SessionElement : ConfigurationElement
     {
         private SessionElement()
         {

@@ -17,43 +17,42 @@ namespace Tharga.Quilt4Net
             if (sessionData == null) throw new ArgumentNullException("sessionData", "No session data provided.");
 
             return new DataTransfer.Session
+            {
+                ClientToken = sessionData.ClientToken,
+                SessionGuid = sessionData.SessionGuid,
+                Environment = sessionData.Environment,
+                Application = new ApplicationData
                 {
-                    ClientToken = sessionData.ClientToken,
-                    SessionGuid = sessionData.SessionGuid,
-                    Environment = sessionData.Environment,
-                    Application = new ApplicationData
-                        {
-                            Fingerprint = sessionData.Application.Fingerprint,
-                            Name = sessionData.Application.Name,
-                            Version = sessionData.Application.Version,
-                            SupportToolkitNameVersion = sessionData.Application.SupportToolkitNameVersion,
-                            BuildTime = sessionData.Application.BuildTime
-                        },
-                    Machine = new MachineData
-                        {
-                            Fingerprint = sessionData.Machine.Fingerprint,
-                            Name = sessionData.Machine.Name,
-                            Data = sessionData.Machine.Data.ToDictionary(x => x.Key, x => x.Value),
-                        },
-                    User = new UserData
-                        {
-                            Fingerprint = sessionData.User.Fingerprint,
-                            UserName = sessionData.User.UserName,
-                        },
-                    //ClientTime = DateTime.UtcNow,
-                };
+                    Fingerprint = sessionData.Application.Fingerprint,
+                    Name = sessionData.Application.Name,
+                    Version = sessionData.Application.Version,
+                    SupportToolkitNameVersion = sessionData.Application.SupportToolkitNameVersion,
+                    BuildTime = sessionData.Application.BuildTime
+                },
+                Machine = new MachineData
+                {
+                    Fingerprint = sessionData.Machine.Fingerprint,
+                    Name = sessionData.Machine.Name,
+                    Data = sessionData.Machine.Data.ToDictionary(x => x.Key, x => x.Value),
+                },
+                User = new UserData
+                {
+                    Fingerprint = sessionData.User.Fingerprint,
+                    UserName = sessionData.User.UserName,
+                },
+            };
         }
 
         public static IssueType ToIssueType(this Entities.IssueType item)
         {
             return new IssueType
-                {
-                    Message = item.Message,
-                    StackTrace = item.StackTrace,
-                    IssueLevel = item.IssueLevel.ToString(),
-                    ExceptionTypeName = item.ExceptionTypeName,
-                    Inner = item.Inner != null ? item.Inner.ToIssueType() : null,
-                };
+            {
+                Message = item.Message,
+                StackTrace = item.StackTrace,
+                IssueLevel = item.IssueLevel.ToString(),
+                ExceptionTypeName = item.ExceptionTypeName,
+                Inner = item.Inner != null ? item.Inner.ToIssueType() : null,
+            };
         }
 
         public static RegisterIssueRequest ToIssueData(this IssueData item)
@@ -68,7 +67,7 @@ namespace Tharga.Quilt4Net
                 IssueType = item.IssueType.ToIssueType(),
                 IssueThreadGuid = item.IssueThreadGuid,
                 UserHandle = item.UserHandle,
-                UserInput = item.UserInput,                
+                UserInput = item.UserInput,
             };
         }
     }

@@ -16,8 +16,7 @@ namespace Tharga.Quilt4Net
         {
             get
             {
-                if (_enabled != null)
-                    return _enabled.Value;
+                if (_enabled != null) return _enabled.Value;
 
                 //If there is no setting, read from config file to populate the value
                 lock (SyncRoot)
@@ -27,20 +26,18 @@ namespace Tharga.Quilt4Net
                         _enabled = ConfigSection.Instance.EnabledValue;
                     }
                 }
+
                 return _enabled.Value;
             }
-            set
-            {
-                _enabled = value;
-            }
+
+            set { _enabled = value; }
         }
 
         public static string ClientToken
         {
             get
             {
-                if (_clientToken != null)
-                    return _clientToken;
+                if (_clientToken != null) return _clientToken;
 
                 //If there is no setting, read from config file to populate the value
                 lock (SyncRoot)
@@ -49,14 +46,14 @@ namespace Tharga.Quilt4Net
                     {
                         _clientToken = ConfigSection.Instance.ClientTokenValue;
                     }
-
                 }
+
                 return _clientToken;
             }
+
             set
             {
-                if (value == null)
-                    throw ExpectedIssues.GetException(ExpectedIssues.CannotSetClientToken);
+                if (value == null) throw ExpectedIssues.GetException(ExpectedIssues.CannotSetClientToken);
                 _clientToken = value;
             }
         }
@@ -65,8 +62,7 @@ namespace Tharga.Quilt4Net
         {
             get
             {
-                if (_useBuildTime != null)
-                    return _useBuildTime.Value;
+                if (_useBuildTime != null) return _useBuildTime.Value;
 
                 //If there is no setting, read from config file to populate the value
                 lock (SyncRoot)
@@ -76,12 +72,11 @@ namespace Tharga.Quilt4Net
                         _useBuildTime = ConfigSection.Instance.UseBuildTimeValue;
                     }
                 }
+
                 return _useBuildTime.Value;
             }
-            set
-            {
-                _useBuildTime = value;
-            }            
+
+            set { _useBuildTime = value; }
         }
 
         public static class Session
@@ -92,45 +87,48 @@ namespace Tharga.Quilt4Net
             {
                 get
                 {
-                    if (_environment != null)
-                        return _environment;
+                    if (_environment != null) return _environment;
 
                     //If there is no setting, read from config file to populate the value
                     lock (SyncRoot)
                     {
                         if (_environment == null)
                         {
-                            _environment = ConfigSection.Instance.SessionValue.Environment ?? "";
+                            _environment = ConfigSection.Instance.SessionValue.Environment ?? string.Empty;
                         }
                     }
 
                     return _environment;
                 }
+
                 set
                 {
-                    if (value == null)
-                        throw ExpectedIssues.GetException(ExpectedIssues.CannotSetEnvironment);
+                    if (value == null) throw ExpectedIssues.GetException(ExpectedIssues.CannotSetEnvironment);
                     _environment = value;
                 }
-            }        
+            }
         }
 
         public static class Target
         {
-            internal enum TargetType { Service, Mock, File }
+            internal enum TargetType
+            {
+                Service,
+                Mock,
+                File
+            }
 
             internal static ITarget Instance { get; set; }
 
             private static string _location;
-            internal static TargetType? _type;
+            private static TargetType? _type;
             private static TimeSpan? _timeout;
 
             public static string Location
             {
                 get
                 {
-                    if (_location != null)
-                        return _location;
+                    if (_location != null) return _location;
 
                     //If there is no setting, read from config file to populate the value
                     lock (SyncRoot)
@@ -144,10 +142,10 @@ namespace Tharga.Quilt4Net
 
                     return _location;
                 }
+
                 set
                 {
-                    if (value == null)
-                        throw ExpectedIssues.GetException(ExpectedIssues.CannotSetLocation);
+                    if (value == null) throw ExpectedIssues.GetException(ExpectedIssues.CannotSetLocation);
                     _location = value;
                     if (!_location.EndsWith("/")) _location += "/";
                 }
@@ -157,8 +155,7 @@ namespace Tharga.Quilt4Net
             {
                 get
                 {
-                    if (_type != null)
-                        return _type.Value;
+                    if (_type != null) return _type.Value;
 
                     //If there is no setting, read from config file to populate the value
                     lock (SyncRoot)
@@ -171,18 +168,15 @@ namespace Tharga.Quilt4Net
 
                     return _type.Value;
                 }
-                set
-                {
-                    _type = value;
-                }
+
+                set { _type = value; }
             }
 
             public static TimeSpan Timeout
             {
                 get
                 {
-                    if (_timeout != null)
-                        return _timeout.Value;
+                    if (_timeout != null) return _timeout.Value;
 
                     //If there is no setting, read from config file to populate the value
                     lock (SyncRoot)
@@ -195,10 +189,10 @@ namespace Tharga.Quilt4Net
 
                     return _timeout.Value;
                 }
+
                 set
                 {
-                    if (value == null)
-                        throw ExpectedIssues.GetException(ExpectedIssues.CannotSetTimeout);
+                    if (value == null) throw ExpectedIssues.GetException(ExpectedIssues.CannotSetTimeout);
                     _timeout = value;
                 }
             }
@@ -208,24 +202,21 @@ namespace Tharga.Quilt4Net
         {
             get
             {
-                if (string.IsNullOrEmpty(_applicationName))
-                    _applicationName = Helper.GetApplicationName();
+                if (string.IsNullOrEmpty(_applicationName)) _applicationName = Helper.GetApplicationName();
                 return _applicationName;
             }
-            set
-            {
-                _applicationName = value;
-            }
+
+            set { _applicationName = value; }
         }
 
         internal static string ApplicationVersion
         {
             get
             {
-                if (string.IsNullOrEmpty(_applicationVersion))
-                    _applicationVersion = Helper.GetApplicationVersion().ToString();
+                if (string.IsNullOrEmpty(_applicationVersion)) _applicationVersion = Helper.GetApplicationVersion().ToString();
                 return _applicationVersion;
             }
+
             set { _applicationVersion = value; }
         }
     }

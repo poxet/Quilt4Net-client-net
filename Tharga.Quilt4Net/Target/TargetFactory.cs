@@ -2,7 +2,7 @@
 
 namespace Tharga.Quilt4Net.Target
 {
-    static class TargetFactory
+    internal static class TargetFactory
     {
         public static ITarget Get()
         {

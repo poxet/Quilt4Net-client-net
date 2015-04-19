@@ -3,9 +3,9 @@ using Tharga.Quilt4Net;
 
 namespace Tharga.ConsoleSample
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Quilt4Net.Configuration.ClientToken = "5H4ZP7EQJWPM2539782YACX6V57J62DF";
             Quilt4Net.Configuration.Target.Location = "http://localhost:50154/";
