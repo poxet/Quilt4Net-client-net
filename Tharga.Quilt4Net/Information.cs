@@ -13,5 +13,6 @@ namespace Tharga.Quilt4Net
         public static string ApplicationName { get { return Helper.GetApplicationName(); } }
         public static string UserName { get { return Helper.GetUserName(); } }
         public static string MachineName { get { return Helper.GetMachineName(); } }
+        public static string MachineFingerprint { get { return Helper.GetMachineFingerprint(); } }
     }
 }
