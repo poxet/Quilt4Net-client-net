@@ -90,6 +90,8 @@
       <Link>Properties\AssemblyVersionInfo.cs</Link>
     </Compile>
     <Compile Include="ConfigurationException.cs" />
+    <Compile Include="Counter.cs" />
+    <Compile Include="CounterInfo.cs" />
     <Compile Include="DataTransfer\ApplicationData.cs" />
     <Compile Include="DataTransfer\IssueResponse.cs" />
     <Compile Include="DataTransfer\IssueType.cs" />
