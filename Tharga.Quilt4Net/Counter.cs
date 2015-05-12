@@ -20,7 +20,7 @@ namespace Tharga.Quilt4Net
             public RegisterCompleteEventArgs(bool isServerOnline, CounterResponse counterResponse)
             {
                 _isServerOnline = isServerOnline;
-                _counterResponse = _counterResponse;
+                _counterResponse = counterResponse;
             }
 
             public RegisterCompleteEventArgs(bool isServerOnline, Exception exception)
@@ -75,6 +75,13 @@ namespace Tharga.Quilt4Net
             BeginRegisterEx(counterInfo.Message, counterInfo.Checkpoints.ToList(), userHandle, data, completeAction);
         }
 
+#if !NETV4
+        public static async Task<CounterResponse> RegisterAsync(CounterInfo counterInfo, string userHandle = null, IDictionary<string, string> data = null)
+        {
+            return await Task<CounterResponse>.Factory.StartNew(() => Register(counterInfo, userHandle, data));
+        }
+#endif
+
         public static CounterResponse Register(string message, string userHandle = null, IDictionary<string, string> data = null)
         {
             if (!Configuration.Enabled) return null;
@@ -93,6 +100,13 @@ namespace Tharga.Quilt4Net
             BeginRegisterEx(message, new List<ICheckpoint>(), userHandle, data, completeAction);
         }
 
+#if !NETV4
+        public static async Task<CounterResponse> RegisterAsync(string message, string userHandle = null, IDictionary<string, string> data = null)
+        {
+            return await Task<CounterResponse>.Factory.StartNew(() => Register(message, userHandle, data));
+        }
+#endif
+
         public static CounterResponse Register(string message, TimeSpan elapsed, string userHandle = null, IDictionary<string, string> data = null)
         {
             if (!Configuration.Enabled) return null;
@@ -110,6 +124,13 @@ namespace Tharga.Quilt4Net
             if (!Configuration.Enabled) return;
             BeginRegisterEx(message, new List<ICheckpoint> { new CheckPoint { Elapsed = elapsed } }, userHandle, data, completeAction);
         }
+
+#if !NETV4
+        public static async Task<CounterResponse> RegisterAsync(string message, TimeSpan elapsed, string userHandle = null, IDictionary<string, string> data = null)
+        {
+            return await Task<CounterResponse>.Factory.StartNew(() => Register(message, elapsed, userHandle, data));
+        }
+#endif
 
         private static void BeginRegisterEx(string message, List<ICheckpoint> checkpoints, string userHandle, IDictionary<string, string> data, Action<RegisterCompleteEventArgs> completeAction)
         {

@@ -68,8 +68,7 @@ namespace Tharga.Quilt4Net
             var issueData = PrepareIssueData(exception, issueLevel, visibleToUser, userHandle, userInput);
             var response = RegisterEx(issueData, null);
 
-            if (!response.Success)
-                throw new InvalidOperationException("Unable to register exception. Look at inner exception for details.", response.Exception);
+            if (!response.Success) throw new InvalidOperationException("Unable to register exception. Look at inner exception for details.", response.Exception);
 
             return response.IssueResponse;
         }
@@ -80,6 +79,13 @@ namespace Tharga.Quilt4Net
             Func<IssueData> issueData = () => PrepareIssueData(exception, issueLevel, visibleToUser, userHandle, userInput);
             BeginRegisterEx(issueData, completeAction);
         }
+
+#if !NETV4
+        public async static Task<IssueResponse> RegisterAsync(Exception exception, ExceptionIssueLevel issueLevel = ExceptionIssueLevel.Error, bool? visibleToUser = null, string userHandle = null, string userInput = null)
+        {
+            return await Task<IssueResponse>.Factory.StartNew(() => Register(exception,issueLevel,visibleToUser,userHandle, userInput));
+        }
+#endif
 
         private static IssueData PrepareIssueData(Exception exception, ExceptionIssueLevel issueLevel, bool? visibleToUser, string userHandle, string userInput)
         {
@@ -96,8 +102,7 @@ namespace Tharga.Quilt4Net
             var issueData = PrepareIssueData(message, issueLevel, visibleToUser, userHandle, userInput, data);
             var response = RegisterEx(issueData, null);
 
-            if (!response.Success)
-                throw new InvalidOperationException("Unable to register exception. Look at inner exception for details.", response.Exception);
+            if (!response.Success) throw new InvalidOperationException("Unable to register exception. Look at inner exception for details.", response.Exception);
 
             return response.IssueResponse;
         }
@@ -108,6 +113,13 @@ namespace Tharga.Quilt4Net
             Func<IssueData> issueData = () => PrepareIssueData(message, issueLevel, visibleToUser, userHandle, userInput, data);
             BeginRegisterEx(issueData, completeAction);
         }
+
+#if !NETV4
+        public async static Task<IssueResponse> RegisterASync(string message, MessageIssueLevel issueLevel, bool? visibleToUser = null, string userHandle = null, string userInput = null, IDictionary<string, string> data = null)
+        {
+            return await Task<IssueResponse>.Factory.StartNew(() => Register(message, issueLevel, visibleToUser, userHandle, userInput, data));
+        }
+#endif
 
         private static IssueData PrepareIssueData(string message, MessageIssueLevel issueLevel, bool? visibleToUser, string userHandle, string userInput, IDictionary<string, string> data)
         {
@@ -120,8 +132,7 @@ namespace Tharga.Quilt4Net
         {
             var refItg = Guid.NewGuid();
 
-            if (exception == null)
-                return refItg;
+            if (exception == null) return refItg;
 
             if (!exception.Data.Contains("IssueThreadGuid"))
             {
@@ -171,15 +182,11 @@ namespace Tharga.Quilt4Net
                 InvokeRegisterComplete(registerCompleteEventArgs);
             }
 
-            if (completeAction != null)
-                completeAction.Invoke(registerCompleteEventArgs);
+            if (completeAction != null) completeAction.Invoke(registerCompleteEventArgs);
 
             return registerCompleteEventArgs;
         }
-        
-        private static void BeginRegisterEx(Func<IssueData> issueData, Action<RegisterCompleteEventArgs> completeAction)
-        {
-            Task.Factory.StartNew(() => RegisterEx(issueData(), completeAction));
-        }
+
+        private static void BeginRegisterEx(Func<IssueData> issueData, Action<RegisterCompleteEventArgs> completeAction) { Task.Factory.StartNew(() => RegisterEx(issueData(), completeAction)); }
     }
 }

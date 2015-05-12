@@ -21,18 +21,30 @@ namespace Tharga.Quilt4Net
 
         public static MachineData Machine
         {
-            get { return GetSessionData().Machine as MachineData; }
+            get
+            {
+                return GetSessionData().Machine as MachineData;
+            }
         }
 
         public static DateTime ClientStartTime
         {
-            get { return _clientStartTime; }
+            get
+            {
+                return _clientStartTime;
+            }
         }
 
         public static bool RegisteredOnServer
         {
-            get { return _registeredOnServer; }
-            internal set { _registeredOnServer = value; }
+            get
+            {
+                return _registeredOnServer;
+            }
+            internal set
+            {
+                _registeredOnServer = value;
+            }
         }
 
         public class RegisterCompleteEventArgs : EventArgs
@@ -53,17 +65,26 @@ namespace Tharga.Quilt4Net
 
             public bool IsServerOnline
             {
-                get { return _isServerOnline; }
+                get
+                {
+                    return _isServerOnline;
+                }
             }
 
             public bool Success
             {
-                get { return _exception == null; }
+                get
+                {
+                    return _exception == null;
+                }
             }
 
             public Exception Exception
             {
-                get { return _exception; }
+                get
+                {
+                    return _exception;
+                }
             }
         }
 
@@ -87,6 +108,13 @@ namespace Tharga.Quilt4Net
             return Register();
         }
 
+#if !NETV4
+        public static async Task<SessionResponse> RegisterAsync(Assembly firstAssembly)
+        {
+            return await Task<SessionResponse>.Factory.StartNew(() => Register(firstAssembly));
+        }
+#endif
+
         public static void BeginRegister()
         {
             BeginRegisterEx();
@@ -103,6 +131,13 @@ namespace Tharga.Quilt4Net
             var result = new SessionResponse(response.IsServerOnline, response.Exception);
             return result;
         }
+
+#if !NETV4
+        public static async Task<SessionResponse> RegisterAsync()
+        {
+            return await Task<SessionResponse>.Factory.StartNew(Register);
+        }
+#endif
 
         private static void BeginRegisterEx()
         {
@@ -133,15 +168,7 @@ namespace Tharga.Quilt4Net
         private static ISessionData CreateSessionData()
         {
             var applicationData = new ApplicationData(Helper.GetApplicationFingerprint(), Configuration.ApplicationName, Configuration.ApplicationVersion, Helper.GetSupportToolkitNameVersion(), Helper.GetBuildTime());
-            var data = new Dictionary<string, string>
-            {
-                { "OsName", Helper.GetOsName() },
-                { "Model", Helper.GetModel() },
-                { "Type", "Desktop" },
-                { "Screen", Helper.GetScreen() },
-                { "TimeZone", Helper.GetTimeZone() },
-                { "Language", Helper.GetLanguage() }
-            };
+            var data = new Dictionary<string, string> { { "OsName", Helper.GetOsName() }, { "Model", Helper.GetModel() }, { "Type", "Desktop" }, { "Screen", Helper.GetScreen() }, { "TimeZone", Helper.GetTimeZone() }, { "Language", Helper.GetLanguage() } };
 
             var machineData = new MachineData(Helper.GetMachineFingerprint(), Helper.GetMachineName(), data);
             var userData = new UserData(Helper.GetUserFingerprint(), Helper.GetUserName());

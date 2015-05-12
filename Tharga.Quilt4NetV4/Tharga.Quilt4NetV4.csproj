@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETV4</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -78,6 +78,12 @@
     </Compile>
     <Compile Include="..\Tharga.Quilt4Net\Converter.cs">
       <Link>Converter.cs</Link>
+    </Compile>
+    <Compile Include="..\Tharga.Quilt4Net\Counter.cs">
+      <Link>Counter.cs</Link>
+    </Compile>
+    <Compile Include="..\Tharga.Quilt4Net\CounterInfo.cs">
+      <Link>CounterInfo.cs</Link>
     </Compile>
     <Compile Include="..\Tharga.Quilt4Net\DataTransfer\ApplicationData.cs">
       <Link>DataTransfer\ApplicationData.cs</Link>
