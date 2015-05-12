@@ -12,7 +12,7 @@ using UserData = Tharga.Quilt4Net.Entities.UserData;
 
 namespace Tharga.Quilt4Net
 {
-    public static class Session
+    public static partial class Session
     {
         private static readonly DateTime _clientStartTime = DateTime.UtcNow;
         private static readonly object _syncRoot = new object();
@@ -108,13 +108,6 @@ namespace Tharga.Quilt4Net
             return Register();
         }
 
-#if !NETV4
-        public static async Task<SessionResponse> RegisterAsync(Assembly firstAssembly)
-        {
-            return await Task<SessionResponse>.Factory.StartNew(() => Register(firstAssembly));
-        }
-#endif
-
         public static void BeginRegister()
         {
             BeginRegisterEx();
@@ -131,13 +124,6 @@ namespace Tharga.Quilt4Net
             var result = new SessionResponse(response.IsServerOnline, response.Exception);
             return result;
         }
-
-#if !NETV4
-        public static async Task<SessionResponse> RegisterAsync()
-        {
-            return await Task<SessionResponse>.Factory.StartNew(Register);
-        }
-#endif
 
         private static void BeginRegisterEx()
         {

@@ -91,6 +91,7 @@
     </Compile>
     <Compile Include="ConfigurationException.cs" />
     <Compile Include="Counter.cs" />
+    <Compile Include="CounterAsync.cs" />
     <Compile Include="CounterInfo.cs" />
     <Compile Include="DataTransfer\ApplicationData.cs" />
     <Compile Include="DataTransfer\CheckPoint.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Interface\ISessionData.cs" />
     <Compile Include="Entities\IssueData.cs" />
     <Compile Include="Entities\IssueLevel.cs" />
+    <Compile Include="IssueAsync.cs" />
     <Compile Include="IssueLevelExtension.cs" />
     <Compile Include="Entities\IssueType.cs" />
     <Compile Include="Interface\ITarget.cs" />
@@ -133,6 +135,7 @@
     <Compile Include="OriginalData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Raw.cs" />
+    <Compile Include="SessionAsync.cs" />
     <Compile Include="Target\ServiceTarget.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="Entities\SessionData.cs" />

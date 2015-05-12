@@ -10,7 +10,7 @@ using IssueType = Tharga.Quilt4Net.Entities.IssueType;
 
 namespace Tharga.Quilt4Net
 {
-    public static class Issue
+    public static partial class Issue
     {
         public class RegisterCompleteEventArgs : EventArgs
         {
@@ -80,13 +80,6 @@ namespace Tharga.Quilt4Net
             BeginRegisterEx(issueData, completeAction);
         }
 
-#if !NETV4
-        public async static Task<IssueResponse> RegisterAsync(Exception exception, ExceptionIssueLevel issueLevel = ExceptionIssueLevel.Error, bool? visibleToUser = null, string userHandle = null, string userInput = null)
-        {
-            return await Task<IssueResponse>.Factory.StartNew(() => Register(exception,issueLevel,visibleToUser,userHandle, userInput));
-        }
-#endif
-
         private static IssueData PrepareIssueData(Exception exception, ExceptionIssueLevel issueLevel, bool? visibleToUser, string userHandle, string userInput)
         {
             var issueThreadGuid = HandleIssueThreadGuid(exception);
@@ -113,13 +106,6 @@ namespace Tharga.Quilt4Net
             Func<IssueData> issueData = () => PrepareIssueData(message, issueLevel, visibleToUser, userHandle, userInput, data);
             BeginRegisterEx(issueData, completeAction);
         }
-
-#if !NETV4
-        public async static Task<IssueResponse> RegisterASync(string message, MessageIssueLevel issueLevel, bool? visibleToUser = null, string userHandle = null, string userInput = null, IDictionary<string, string> data = null)
-        {
-            return await Task<IssueResponse>.Factory.StartNew(() => Register(message, issueLevel, visibleToUser, userHandle, userInput, data));
-        }
-#endif
 
         private static IssueData PrepareIssueData(string message, MessageIssueLevel issueLevel, bool? visibleToUser, string userHandle, string userInput, IDictionary<string, string> data)
         {
