@@ -57,6 +57,18 @@ namespace Tharga.Quilt4Net.Target
             return response;
         }
 
+        public CounterResponse RegisterCounter(CounterData counterData)
+        {
+            var data = counterData.ToCounterData();
+
+            var jsonFormatter = new JsonMediaTypeFormatter();
+            var content = new ObjectContent<RegisterCounterRequest>(data, jsonFormatter);
+
+            var x = ExecuteQuery<RegisterCounterRequest, RegisterCounterResponse>(content, "counter", "register");
+            var response = new CounterResponse();
+            return response;
+        }
+
         private TResult ExecuteQuery<T, TResult>(ObjectContent<T> content, string controller, string action)
         {
             try

@@ -9,5 +9,6 @@ namespace Tharga.Quilt4Net.Interface
         void RegisterSession(ISessionData sessionData);
         void EndSession(Guid sessionId);
         IssueResponse RegisterIssue(IssueData issueData);
+        CounterResponse RegisterCounter(CounterData counterData);
     }
 }

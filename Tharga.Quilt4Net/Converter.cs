@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Tharga.Quilt4Net.DataTransfer;
 using Tharga.Quilt4Net.Entities;
@@ -69,6 +70,30 @@ namespace Tharga.Quilt4Net
                 UserHandle = item.UserHandle,
                 UserInput = item.UserInput,
             };
+        }
+
+        public static RegisterCounterRequest ToCounterData(this CounterData item)
+        {
+            return new RegisterCounterRequest
+            {
+                Id = item.Id,
+                Session = item.Session.ToSessionData(),
+                ClientTime = item.ClientTime,
+                UserHandle = item.UserHandle,
+                Message = item.Message,
+                Data = item.Data,
+                Checkpoints = item.Checkpoints.ToCheckpoints().ToList(),
+            };
+        }
+
+        public static IEnumerable<CheckPoint> ToCheckpoints(this IEnumerable<ICheckpoint> items)
+        {
+            return items.Select(x => new CheckPoint
+                                         {
+                                             Level = x.Level,
+                                             Elapsed = x.Elapsed,
+                                             Step = x.Step,
+                                         });
         }
     }
 }
