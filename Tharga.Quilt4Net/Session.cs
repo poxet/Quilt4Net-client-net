@@ -18,6 +18,7 @@ namespace Tharga.Quilt4Net
         private static readonly object _syncRoot = new object();
         private static ISessionData _sessionData;
         private static bool _registeredOnServer;
+        private static RegisterCompleteEventArgs _registerCompleteEventArgs;
 
         public static MachineData Machine
         {
@@ -46,6 +47,7 @@ namespace Tharga.Quilt4Net
                 _registeredOnServer = value;
             }
         }
+        public static RegisterCompleteEventArgs LastRegisterCompleteEventArgs { get { return _registerCompleteEventArgs; } }
 
         public class RegisterCompleteEventArgs : EventArgs
         {
@@ -211,6 +213,8 @@ namespace Tharga.Quilt4Net
             {
                 InvokeRegisterComplete(registerCompleteEventArgs);
             }
+
+            _registerCompleteEventArgs = registerCompleteEventArgs;
 
             return registerCompleteEventArgs;
         }

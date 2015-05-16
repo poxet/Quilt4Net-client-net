@@ -11,6 +11,8 @@ namespace Tharga.Quilt4Net
 {
     public static partial class Counter
     {
+        private static RegisterCompleteEventArgs _registerCompleteEventArgs;
+
         public class RegisterCompleteEventArgs : EventArgs
         {
             private readonly bool _isServerOnline;
@@ -36,6 +38,7 @@ namespace Tharga.Quilt4Net
         }
 
         public static event EventHandler<RegisterCompleteEventArgs> RegisterCompleteEvent;
+        public static RegisterCompleteEventArgs LastRegisterCompleteEventArgs { get { return _registerCompleteEventArgs; } }
 
         private static void InvokeRegisterComplete(RegisterCompleteEventArgs eventArgs)
         {
@@ -143,6 +146,8 @@ namespace Tharga.Quilt4Net
 
             if (completeAction != null)
                 completeAction.Invoke(registerCompleteEventArgs);
+
+            _registerCompleteEventArgs = registerCompleteEventArgs;
 
             return registerCompleteEventArgs;
         }
