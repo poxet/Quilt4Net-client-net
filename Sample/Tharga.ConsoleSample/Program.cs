@@ -10,35 +10,35 @@ namespace Tharga.ConsoleSample
         {
             var rng = new Random();
 
-            var cnt = Counter.Start("Main");
+            //var cnt = Counter.Start("Main");
 
-            Configuration.ClientToken = "5H4ZP7EQJWPM2539782YACX6V57J62DF";
+            Configuration.ClientToken = "HBEN8JB06D63XZDGWNNYA3503L01F1IE";
             Configuration.Target.Location = "http://localhost:50154/";
-            Counter.Checkpoint(cnt, "Config");
+            //Counter.Checkpoint(cnt, "Config");
 
             Session.Register();
-            cnt.Step("Register Session");
+            //cnt.Step("Register Session");
 
             Issue.Register("ABC", Issue.MessageIssueLevel.Warning);
-            cnt.Step("Register Issue");
+            //cnt.Step("Register Issue");
 
             for (var i = 0; i < 10; i++)
             {
-                var loop = Counter.Start("Lap " + i);
+                //var loop = Counter.Start("Lap " + i);
 
                 for (var j = 0; j < rng.Next(3, 5); j++)
                 {
                     var inner = new CounterInfo("Inner " + j);
                     Thread.Sleep(rng.Next(100, 500));
-                    loop.Step(inner);
+                    //loop.Step(inner);
                 }
 
-                cnt.Step(loop);
+                //cnt.Step(loop);
             }
 
             Session.End();
 
-            Counter.Register(cnt);
+            //Counter.Register(cnt);
 
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
