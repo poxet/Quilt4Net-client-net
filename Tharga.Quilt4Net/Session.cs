@@ -19,6 +19,7 @@ namespace Tharga.Quilt4Net
         private static ISessionData _sessionData;
         private static bool _registeredOnServer;
         private static RegisterCompleteEventArgs _registerCompleteEventArgs;
+        private static Dictionary<string, string> _metadata;
 
         public static MachineData Machine
         {
@@ -156,12 +157,46 @@ namespace Tharga.Quilt4Net
         private static ISessionData CreateSessionData()
         {
             var applicationData = new ApplicationData(Helper.GetApplicationFingerprint(), Configuration.ApplicationName, Configuration.ApplicationVersion, Helper.GetSupportToolkitNameVersion(), Helper.GetBuildTime());
-            var data = new Dictionary<string, string> { { "OsName", Helper.GetOsName() }, { "Model", Helper.GetModel() }, { "Type", "Desktop" }, { "Screen", Helper.GetScreen() }, { "TimeZone", Helper.GetTimeZone() }, { "Language", Helper.GetLanguage() } };
-
+            var data = GetMetadata();
             var machineData = new MachineData(Helper.GetMachineFingerprint(), Helper.GetMachineName(), data);
             var userData = new UserData(Helper.GetUserFingerprint(), Helper.GetUserName());
             var sessionData = new SessionData(Configuration.ClientToken, Guid.NewGuid(), _clientStartTime, Configuration.Session.Environment, applicationData, machineData, userData);
             return sessionData;
+        }
+
+        private static Dictionary<string, string> GetMetadata()
+        {
+            if (_metadata != null) return _metadata;
+
+            lock (_syncRoot)
+            {
+                if (_metadata == null)
+                {
+                    var data = new Dictionary<string, string>();
+                    data = AppendData(data, "OsName", Helper.GetOsName);
+                    data = AppendData(data, "Model", Helper.GetModel);
+                    data = AppendData(data, "Type", () => "Desktop");
+                    data = AppendData(data, "Screen", () => "GetScreen");
+                    data = AppendData(data, "TimeZone", () => "GetTimeZone");
+                    data = AppendData(data, "Language", () => "GetLanguage");
+                    _metadata = data;
+                }
+            }
+
+            return _metadata;
+        }
+
+        private static Dictionary<string, string> AppendData(Dictionary<string, string> data, string osname, Func<string> func)
+        {
+            try
+            {
+                data.Add(osname, func.Invoke());
+                return data;
+            }
+            catch (Exception)
+            {
+                return data;
+            }
         }
 
         public static void End()

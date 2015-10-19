@@ -81,7 +81,10 @@ namespace Tharga.Quilt4Net
                 }
             }
 
-            if (_firstAssembly != firstAssembly) throw ExpectedIssues.GetException(ExpectedIssues.CannotChangeFirstAssembly).AddData("From", _firstAssembly.GetName().FullName).AddData("To", firstAssembly.GetName().FullName);
+            if (_firstAssembly != firstAssembly)
+            {
+                throw ExpectedIssues.GetException(ExpectedIssues.CannotChangeFirstAssembly).AddData("From", _firstAssembly.GetName().FullName).AddData("To", firstAssembly.GetName().FullName);
+            }
         }
 
         public static string GetMachineFingerprint()
@@ -144,7 +147,6 @@ namespace Tharga.Quilt4Net
                     {
                         try
                         {
-                            //response = info["Name"] + " (" + info["CurrentHorizontalResolution"] + " x " + info["CurrentVerticalResolution"] + ")";
                             response = string.Format("{0}x{1}", info["CurrentHorizontalResolution"], info["CurrentVerticalResolution"]);
                             break;
                         }
@@ -191,17 +193,24 @@ namespace Tharga.Quilt4Net
 
         internal static string GetModel()
         {
-            var model = string.Empty;
-            var mc = new ManagementClass("win32_processor");
-            var moc = mc.GetInstances();
-
-            foreach (ManagementObject mo in moc)
+            var model = "Unknown";
+            try
             {
-                if (string.IsNullOrEmpty(model))
+                var mc = new ManagementClass("win32_processor");
+                var moc = mc.GetInstances();
+
+                foreach (ManagementObject mo in moc)
                 {
-                    model = mo.Properties["Name"].Value.ToString();
-                    break;
+                    if (string.IsNullOrEmpty(model))
+                    {
+                        model = mo.Properties["Name"].Value.ToString();
+                        break;
+                    }
                 }
+            }
+            catch
+            {
+                model = "N/A";
             }
 
             return model;
@@ -209,16 +218,23 @@ namespace Tharga.Quilt4Net
 
         private static string GetDriveSerial()
         {
-            var driveSerial = string.Empty;
+            var driveSerial = "Unknown";
 
-            var drives = Directory.GetLogicalDrives();
-            foreach (var drive in drives)
+            try
             {
-                if (!drive.StartsWith("A") && !drive.StartsWith("B"))
+                var drives = Directory.GetLogicalDrives();
+                foreach (var drive in drives)
                 {
-                    driveSerial = GetHarddriveId(drive[0]);
-                    if (!string.IsNullOrEmpty(driveSerial)) break;
+                    if (!drive.StartsWith("A") && !drive.StartsWith("B"))
+                    {
+                        driveSerial = GetHarddriveId(drive[0]);
+                        if (!string.IsNullOrEmpty(driveSerial)) break;
+                    }
                 }
+            }
+            catch
+            {
+                driveSerial = "N/A";
             }
 
             return driveSerial;
@@ -226,9 +242,19 @@ namespace Tharga.Quilt4Net
 
         private static string GetHarddriveId(char drive)
         {
-            var dsk = new ManagementObject(string.Format("win32_logicaldisk.deviceid=\"{0}:\"", drive));
-            dsk.Get();
-            return dsk["VolumeSerialNumber"].ToString();
+            string harddriveId;
+            try
+            {
+                var dsk = new ManagementObject(string.Format("win32_logicaldisk.deviceid=\"{0}:\"", drive));
+                dsk.Get();
+                harddriveId = dsk["VolumeSerialNumber"].ToString();
+            }
+            catch
+            {
+                harddriveId = "N/A";
+            }
+
+            return harddriveId;
         }
 
         public static string GetUserFingerprint()
